@@ -11,6 +11,8 @@ public interface IGameServerManager {
 
     IGameServer getGameSererBySnowflake(long snowflake);
 
+    List<IGameServer> getGameServers();
+
     List<IGameServer> getGameServersByTemplate(ITemplate template);
 
     List<IGameServer> getGameServersByType(TemplateType type);

@@ -2,7 +2,7 @@ package de.polocloud.api.network.client;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import de.polocloud.api.network.client.handler.ClientHandler;
+import de.polocloud.api.network.NetworkHandler;
 import de.polocloud.api.network.protocol.IProtocol;
 import de.polocloud.api.network.protocol.packet.IPacket;
 import io.netty.bootstrap.Bootstrap;
@@ -47,11 +47,11 @@ public class SimpleNettyClient implements INettyClient {
         this.protocol = protocol;
     }
 
-    private ClientHandler clientHandler;
+    private NetworkHandler networkHandler;
 
     @Override
     public void start() {
-        clientHandler = new ClientHandler(protocol);
+        networkHandler = new NetworkHandler(protocol);
 
         MultithreadEventLoopGroup workerGroup = Epoll.isAvailable() ? new EpollEventLoopGroup() : new NioEventLoopGroup();
 
@@ -65,7 +65,7 @@ public class SimpleNettyClient implements INettyClient {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
                         socketChannel.pipeline().addLast(new ObjectEncoder());
-                        socketChannel.pipeline().addLast(clientHandler);
+                        socketChannel.pipeline().addLast(networkHandler);
                     }
                 });
                 this.channelFuture = bootstrap.connect(host, port);
@@ -90,7 +90,7 @@ public class SimpleNettyClient implements INettyClient {
 
     @Override
     public void sendPacket(IPacket packet) {
-        clientHandler.getChannelHandlerContext().writeAndFlush(packet);
+        networkHandler.getChannelHandlerContext().writeAndFlush(packet);
     }
 
 

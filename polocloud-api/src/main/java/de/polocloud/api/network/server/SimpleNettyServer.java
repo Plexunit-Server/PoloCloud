@@ -1,10 +1,8 @@
 package de.polocloud.api.network.server;
 
 import com.google.inject.Inject;
-import de.polocloud.api.CloudAPI;
-import de.polocloud.api.network.client.handler.ClientHandler;
+import de.polocloud.api.network.NetworkHandler;
 import de.polocloud.api.network.protocol.IProtocol;
-import de.polocloud.api.network.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -41,7 +39,7 @@ public class SimpleNettyServer implements INettyServer {
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
                     socketChannel.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
                     socketChannel.pipeline().addLast(new ObjectEncoder());
-                    socketChannel.pipeline().addLast(new ClientHandler(protocol));
+                    socketChannel.pipeline().addLast(new NetworkHandler(protocol));
                 }
             }).option(ChannelOption.SO_BACKLOG, 128);
             ChannelFuture channelFuture = serverBootstrap.bind(this.port).sync();

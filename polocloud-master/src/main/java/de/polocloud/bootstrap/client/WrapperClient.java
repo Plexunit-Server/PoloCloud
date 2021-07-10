@@ -26,7 +26,11 @@ public class WrapperClient implements IPacketSender {
     }
 
     public String getName() {
-        return name;
+        return this.name;
+    }
+
+    public ChannelHandlerContext getConnection(){
+        return this.chx;
     }
 
     @Override

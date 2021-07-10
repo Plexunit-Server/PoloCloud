@@ -2,6 +2,7 @@ package de.polocloud.api.gameserver;
 
 import de.polocloud.api.network.protocol.packet.IPacket;
 import de.polocloud.api.template.ITemplate;
+import io.netty.channel.ChannelHandlerContext;
 
 public interface IGameServer {
 
@@ -22,5 +23,6 @@ public interface IGameServer {
     void stop();
 
     void sendPacket(IPacket packet);
+
 
 }

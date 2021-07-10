@@ -9,4 +9,5 @@ public interface IWrapperClientManager {
 
     void registerWrapperClient(WrapperClient wrapperClient);
 
+    void removeWrapper(WrapperClient wrapperClient);
 }

@@ -22,6 +22,8 @@ import de.polocloud.bootstrap.config.MasterConfig;
 import de.polocloud.bootstrap.creator.ServerCreatorRunner;
 import de.polocloud.bootstrap.gameserver.SimpleGameServerManager;
 import de.polocloud.bootstrap.guice.MasterGuiceModule;
+import de.polocloud.bootstrap.listener.ChannelActiveListener;
+import de.polocloud.bootstrap.listener.ChannelInactiveListener;
 import de.polocloud.bootstrap.network.handler.GameServerPlayerRequestJoinHandler;
 import de.polocloud.bootstrap.network.handler.GameServerRegisterPacketHandler;
 import de.polocloud.bootstrap.network.handler.WrapperLoginPacketHandler;
@@ -97,6 +99,8 @@ public class Master implements IStartable, ITerminatable {
         this.nettyServer.getProtocol().registerPacketHandler(PoloCloudAPI.getInstance().getGuice().getInstance(WrapperLoginPacketHandler.class));
         this.nettyServer.getProtocol().registerPacketHandler(PoloCloudAPI.getInstance().getGuice().getInstance(GameServerRegisterPacketHandler.class));
         this.nettyServer.getProtocol().registerPacketHandler(PoloCloudAPI.getInstance().getGuice().getInstance(GameServerPlayerRequestJoinHandler.class));
+        this.nettyServer.getProtocol().registerPacketHandler(PoloCloudAPI.getInstance().getGuice().getInstance(ChannelActiveListener.class));
+        this.nettyServer.getProtocol().registerPacketHandler(PoloCloudAPI.getInstance().getGuice().getInstance(ChannelInactiveListener.class));
 
 
         System.out.println("starting...");

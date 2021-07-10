@@ -35,6 +35,11 @@ public class SimpleGameServerManager implements IGameServerManager {
     }
 
     @Override
+    public List<IGameServer> getGameServers() {
+        return this.gameServerList;
+    }
+
+    @Override
     public List<IGameServer> getGameServersByTemplate(ITemplate template) {
 
         List<IGameServer> result = new ArrayList<>();

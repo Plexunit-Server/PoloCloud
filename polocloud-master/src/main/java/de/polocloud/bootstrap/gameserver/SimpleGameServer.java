@@ -75,6 +75,10 @@ public class SimpleGameServer implements IGameServer {
         //TODO implement stop
     }
 
+    public ChannelHandlerContext getCtx() {
+        return ctx;
+    }
+
     @Override
     public void sendPacket(IPacket packet) {
         this.ctx.writeAndFlush(packet);

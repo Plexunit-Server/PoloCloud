@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class SimpleWrapperClientManager implements IWrapperClientManager{
+public class SimpleWrapperClientManager implements IWrapperClientManager {
 
     private List<WrapperClient> clientList = new ArrayList<>();
 
@@ -17,6 +17,11 @@ public class SimpleWrapperClientManager implements IWrapperClientManager{
     @Override
     public void registerWrapperClient(WrapperClient wrapperClient) {
         clientList.add(wrapperClient);
+    }
+
+    @Override
+    public void removeWrapper(WrapperClient wrapperClient) {
+        clientList.remove(wrapperClient);
     }
 
 }
