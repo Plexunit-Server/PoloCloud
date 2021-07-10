@@ -24,14 +24,19 @@ public class TemplateCloudCommand extends CloudCommand {
     public void execute(String[] args) {
         if (args.length == 1) {
             System.out.println("template versions");
-            System.out.println("template create <name> <minServerCount> <maxServerCount> <MINECRAFT/PROXY> <version>");
-        } else if (args.length == 7) {
+            System.out.println("template create <name> <minServerCount> <maxServerCount> <MINECRAFT/PROXY> <version> <WrapperNames...>");
+        } else if (args.length >= 7) {
             if (args[1].equalsIgnoreCase("create")) {
                 String name = args[2];
                 int minServerCount = Integer.parseInt(args[3]);
                 int maxServerCount = Integer.parseInt(args[4]);
 
-                ITemplate template = new SimpleTemplate(name, maxServerCount, minServerCount, TemplateType.valueOf(args[5]), GameServerVersion.getVersion(args[6]));
+                String[] wrapperNames = new String[args.length - 7];
+                for(int i = 7; i < args.length; i++){
+                    wrapperNames[i - 7] = args[i];
+                }
+
+                ITemplate template = new SimpleTemplate(name, maxServerCount, minServerCount, TemplateType.valueOf(args[5]), GameServerVersion.getVersion(args[6]), wrapperNames);
 
                 this.templateService.getTemplateSaver().save(template);
 

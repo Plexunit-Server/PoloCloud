@@ -4,12 +4,18 @@ import de.polocloud.api.network.protocol.packet.IPacket;
 
 public class WrapperLoginPacket implements IPacket {
 
+    private String name;
     private String key;
 
     public WrapperLoginPacket() {
     }
-    public WrapperLoginPacket(String key) {
+    public WrapperLoginPacket(String name, String key) {
+        this.name = name;
         this.key = key;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getKey() {

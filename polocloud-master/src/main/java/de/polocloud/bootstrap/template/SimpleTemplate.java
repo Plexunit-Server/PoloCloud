@@ -15,17 +15,25 @@ public class SimpleTemplate implements ITemplate {
 
     private GameServerVersion version;
 
-    public SimpleTemplate(String name, int maxServerCount, int minServerCount, TemplateType templateType, GameServerVersion version){
+    private String[] wrapperNames;
+
+    public SimpleTemplate(String name, int maxServerCount, int minServerCount, TemplateType templateType, GameServerVersion version, String[] wrapperNames){
         this.name = name;
         this.maxServerCount = maxServerCount;
         this.minServerCount = minServerCount;
         this.templateType = templateType;
         this.version = version;
+        this.wrapperNames = wrapperNames;
     }
 
     @Override
     public GameServerVersion getVersion() {
         return version;
+    }
+
+    @Override
+    public String[] getWrapperNames() {
+        return this.wrapperNames;
     }
 
     @Override

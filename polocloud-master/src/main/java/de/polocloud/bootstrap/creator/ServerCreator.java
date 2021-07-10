@@ -9,6 +9,9 @@ import de.polocloud.bootstrap.client.IWrapperClientManager;
 import de.polocloud.bootstrap.client.WrapperClient;
 import de.polocloud.bootstrap.gameserver.SimpleGameServer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class ServerCreator {
@@ -23,7 +26,7 @@ public abstract class ServerCreator {
     private Snowflake snowflake;
 
     public void startServer(ITemplate template) {
-        WrapperClient client = getSuitableWrapper();
+        WrapperClient client = getSuitableWrapper(template);
         if (client == null) {
             return;
         }
@@ -38,11 +41,27 @@ public abstract class ServerCreator {
 
     public abstract boolean check(ITemplate template);
 
-    private WrapperClient getSuitableWrapper() {
-        if (wrapperClientManager.getWrapperClients().isEmpty()) {
+    protected WrapperClient getSuitableWrapper(ITemplate template) {
+
+
+        List<WrapperClient> wrapperClients = wrapperClientManager.getWrapperClients();
+
+        if (wrapperClients.isEmpty()) {
             return null;
         }
-        return wrapperClientManager.getWrapperClients().get(ThreadLocalRandom.current().nextInt(wrapperClientManager.getWrapperClients().size()));
+
+        List<WrapperClient> suitableWrappers = new ArrayList<>();
+
+        for (WrapperClient wrapperClient : wrapperClients) {
+            if (Arrays.asList(template.getWrapperNames()).contains(wrapperClient.getName())) {
+                suitableWrappers.add(wrapperClient);
+            }
+        }
+        if (suitableWrappers.isEmpty()) {
+            return null;
+        }
+        return suitableWrappers.get(ThreadLocalRandom.current().nextInt(suitableWrappers.size()));
+
     }
 
 }

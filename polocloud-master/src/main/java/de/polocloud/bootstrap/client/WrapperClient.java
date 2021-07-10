@@ -9,18 +9,24 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class WrapperClient implements IPacketSender {
 
+    private String name;
     private ChannelHandlerContext chx;
 
-    public WrapperClient(ChannelHandlerContext ctx) {
+    public WrapperClient(String name, ChannelHandlerContext ctx) {
+        this.name = name;
         this.chx = ctx;
     }
 
     public void startServer(IGameServer gameServer) {
-        System.out.println("start server " + gameServer.getName());
+        System.out.println("start server " + gameServer.getName() + " on Wrapper " + getName());
         sendPacket(new MasterRequestServerStartPacket(
             gameServer.getTemplate().getName(),
             gameServer.getTemplate().getVersion(), gameServer.getSnowflake(),
             gameServer.getTemplate().getTemplateType() == TemplateType.PROXY));
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
